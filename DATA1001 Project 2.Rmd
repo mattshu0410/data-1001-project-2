@@ -1,0 +1,111 @@
+---
+title: "Title of Project"
+author: "Group # in Canvas; Student SIDs"
+subtitle: "Project 2"
+date: "University of Sydney | DATA1001 | September 2020"
+output:
+  html_document:
+    fig_caption: yes
+    number_sections: yes
+    self_contained: yes
+    theme: flatly
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    code_folding: hide
+---
+
+<br>
+
+# Executive Summary
+
+<br>
+
+# Full Report
+
+## Initial Data Analysis (IDA)
+Data cleaning was done in Excel. Unnecessary columns were removed and headings were replaced with simpler concise ones. The columns that were kept were: Score, Media Agencies, Check Frequency, Gender. Due to the need for a numerical analysis, more than 5 was considered as 5. Score formats were changed from e.g. "11 / 12" to "11". One entry had missing data and had to be removed.
+
+```{r, warning=FALSE, message = FALSE}
+# Read in your survey data
+library(dplyr)
+setwd("C:\\Users\\bigha\\OneDrive\\University Notes\\First Year SEM 2\\DATA1001\\Project 2\\")
+survey = read.csv("COVID-19 Knowledge Survey - Copy.csv")
+summary(survey)
+```
+
+<br>
+
+## Research Questions 
+
+<br>
+Is there a linear correlation between the number of distinct media agencies an individual has gotten COVID-19 news from in the last month and the accuracy of their knowledge about COVID-19 facts.
+```{r, message = FALSE}
+library(ggplot2)
+Score = survey$Score
+Agencies = survey$Media.Agencies
+Frequency = survey$Check.Frequency
+Percentage = survey$Percentage
+#Linear Model Plot
+lmodel1 = lm(Percentage~Agencies)
+summary(lmodel1)
+ggplot(survey, aes(Media.Agencies, Percentage)) +
+  geom_point() +
+  geom_line(aes(y=predict(lmodel1))) +
+  xlab("Number of unique Media Agencies individual acquired COVID-19 information from in past month") +
+  ylab("Percentage Accuracy on COVID-19 Fact Test")
+#Residuals Plot
+ggplot(NULL, aes(survey$Media.Agencies, lmodel1$residuals)) +
+  geom_point() +
+  geom_hline(yintercept = 0) +
+  labs(title = "Residuals Plot") +
+  xlab("Number of unique Media Agencies individual acquired COVID-19 information from in past month") +
+  ylab("Residuals") +
+  geom_smooth()
+#Correlation
+cor(Agencies, Percentage)
+
+```
+
+If there a linear correlation between the frequency which an individual checks COVID-19 progression in the past month and the accuracy of their knowledge about COVID-19 facts.
+
+```{r, message = FALSE}
+#Linear Model Plot
+lmodel2 = lm(Percentage~Frequency)
+summary(lmodel1)
+ggplot(survey, aes(Check.Frequency, Percentage)) +
+  geom_point() +
+  geom_line(aes(y=predict(lmodel2))) +
+  xlab("Number of unique Media Agencies individual acquired COVID-19 information from in past month") +
+  ylab("Percentage Accuracy on COVID-19 Fact Test")
+#Residuals Plot
+ggplot(NULL, aes(survey$Check.Frequency, lmodel1$residuals)) +
+  geom_point() +
+  geom_hline(yintercept = 0) +
+  labs(title = "Residuals Plot") +
+  xlab("Number of unique Media Agencies individual acquired COVID-19 information from in past month") +
+  ylab("Residuals") +
+  geom_smooth()
+#Correlation
+cor(Agencies, Percentage)
+```
+
+## Related Articles
+
+<br>
+
+## References
+Use APA
+
+<br>
+
+## Acknowledgments
+When did you team meet (date and time), and what did each team member contribute?
+
+
+
+
+
+
+
+

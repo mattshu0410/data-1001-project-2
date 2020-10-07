@@ -30,7 +30,7 @@ Data cleaning was done in Excel. Unnecessary columns were removed and headings w
 # Read in your survey data
 library(dplyr)
 setwd("C:\\Users\\bigha\\OneDrive\\University Notes\\First Year SEM 2\\DATA1001\\Project 2\\")
-survey = read.csv("COVID-19 Knowledge Survey - Copy.csv")
+survey = read.csv("https://raw.githubusercontent.com/mattshu0410/data-1001-project-2/main/COVID-19%20Knowledge%20Survey%20Cleaned%20Data.csv")
 summary(survey)
 ```
 
